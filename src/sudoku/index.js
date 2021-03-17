@@ -161,7 +161,7 @@ sudoku.generate = function(difficulty, unique){
 
 // Solve
 // -------------------------------------------------------------------------
-sudoku.solve = function(board, reverse){
+sudoku.solve = function(_board, reverse){
     /* Solve a sudoku puzzle given a sudoku `board`, i.e., an 81-character 
     string of sudoku.DIGITS, 1-9, and spaces identified by '.', representing the
     squares. There must be a minimum of 17 givens. If the given board has no
@@ -173,6 +173,7 @@ sudoku.solve = function(board, reverse){
     */
     
     // Assure a valid board
+    let board = _board.substring(0, 81)
     var report = sudoku.validate_board(board);
     if(report !== true){
         throw report;
@@ -662,6 +663,7 @@ sudoku.print_board = function(board){
 };
 
 sudoku.validate_board = function(board){
+    console.log(board, board.length)
     /* Return if the given `board` is valid or not. If it's valid, return
     true. If it's not, return a string of the reason why it's not.
     */
