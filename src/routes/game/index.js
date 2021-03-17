@@ -4,168 +4,20 @@ import style from './style.css';
 import s from '../../sudoku/index.js';
 import Match from 'preact-router/match';
 
+import useSettings from './hooks/useSettings.js';
+import useGameString from './hooks/useGameString.js';
+import Row from './Row.js';
+import FilterCandidatesSettings from './FilterCandidatesSettings.js';
+import ShowMistakesSettings from './ShowMistakesSettings.js';
+import { toURLValue, toDisplayValue, toSolutionValue } from './util.js'
+import p from './presentationalComponents.js'
 
-const toURLValue = (val) => {
-	switch (String(val)) {
-		case '1':
-			return 'a';
-		case '2':
-			return 'b';
-		case '3':
-			return 'c';
-		case '4':
-			return 'd';
-		case '5':
-			return 'e';
-		case '6':
-			return 'f';
-		case '7':
-			return 'g';
-		case '8':
-			return 'h';
-		case '9':
-			return 'i';
-		case '.':
-			return 'k';
-		default:
-			return null;
-	}
-}
-
-const toDisplayValue = (val) => {
-	if (!isNaN(Number(val))) return val;
-	switch (val.toLowerCase()) {
-		case 'a':
-			return '1';
-		case 'b':
-			return '2';
-		case 'c':
-			return '3';
-		case 'd':
-			return '4';
-		case 'e':
-			return '5';
-		case 'f':
-			return '6';
-		case 'g':
-			return '7';
-		case 'h':
-			return '8';
-		case 'i':
-			return '9';
-		case 'k':
-			return '.';
-		default:
-			return null;
-	}
-}
-
-const toSolutionValue = (gameArr) => {
-	return gameArr.slice(0, 81).map((x) => {
-		if (Number.isNaN(Number(x))) return '.';
-		return x;
-	}).join('')
-} 
-
-const BoardThird = ({ children }) => {
-	return <div class={style.boardThird}>
-		{ children }
-	</div>
-};
-
-const Settings = ({ children }) => {
-	return <div class={style.settings}>
-		{children}
-	</div>
-}
-
-const useHideable = () => {
-	const { pathname } = window.location;
-	const [show, setShow] = useState(false);
-	const onOpen = () => {
-		setShow(true);
-	}
-	const onClose = () => {
-		setShow(false);
-	}
-
-	useEffect(() => {
-		onClose();
-	}, [pathname])
-	return {
-		show,
-		onOpen,
-		onClose,
-	}
-}
-
-const ButtonWithModal = ({ children, buttonText, ...buttonProps }) => {
-	const { show, onOpen, onClose } = useHideable();
-	// todo: focus modal when opened
-	return <>
-		{show && <div class={style.modalWrapper}>
-			<div class={style.modalInner}>
-				<div>
-					{children}
-				</div>
-				<button onClick={onClose}>close</button>
-			</div>
-		</div>}
-		<button onClick={onOpen} {...buttonProps}>
-			{buttonText}
-		</button>
-	</>
-}
-
-const replaceByIndex = (str, index, value) => {
-	let newStr = String(str);
-	const x = newStr.split('');
-	x[index] = toURLValue(value);
-	return x.join('');
-}
-
-const useGameString = () => {
-	const { pathname } = window.location;
-	return pathname.split('/').filter(Boolean)[1];
-}
-
-const GameLink = ({ index, value, children }) => {
-	let gameStr = useGameString();
-	const href = "/g/" + replaceByIndex(gameStr, index, value);
-	return <a class={style.gameLink} href={href}>{children}</a>
-}
-
-const Square = ({ square, settings: { showMistakes, filterCandidates, toggleFilterCandidates } }) => {
-	let className = square.isUserProvided ? style.userSquare : style.defaultSquare;
-	
-	if (showMistakes && square.isIncorrect) className += " " + style.incorrectSquare;
-	const candidates = filterCandidates ? ['1', '2', '3', '4', '5', '6', '7', '8', '9'] : square.candidates;
-	return <ButtonWithModal
-		class={`${style.square} ${className}`} 
-		disabled={!square.isUserProvided} 
-		buttonText={String(square.displayValue)}
-	>
-		{candidates.map(candidate => {
-			return <GameLink value={candidate} index={square.index}>{candidate}</GameLink>
-		})}
-
-		<GameLink value={'.'} index={square.index}>Remove guess</GameLink>
-		<button onClick={toggleFilterCandidates}>
-			{filterCandidates ? "Hide invalid candidates" : "Show all candidates"}
-		</button>
-	</ButtonWithModal>
-}
-
-const Row = ({ squares, settings }) => {
-	return <div class={style.row}>
-		{ squares.map(sq => <Square square={sq} settings={settings} />) }
-	</div>
-}
-
-
+const { BoardThird, Settings } = p;
 
 const newGame = (gameStr) => {
 	try {
+
+		// TODO Simplify / Factor this function
 		const split = gameStr.split('');
 		const solutionValue = toSolutionValue(split);
 		const solution = s.solve(solutionValue);
@@ -203,37 +55,7 @@ const newGame = (gameStr) => {
 		console.error(e);
 		return { rows: [] }
 	}
-}
-
-const useSettings = () => {
-	const [showMistakes, setShowMistakes] = useState(false);
-	const [filterCandidates, setSetFilterCandidates] = useState(true);
-	const toggleShowMistakes = (e) => setShowMistakes(!showMistakes);
-	const toggleFilterCandidates = (e) => setSetFilterCandidates(!filterCandidates);
-	return {
-		filterCandidates,
-		toggleFilterCandidates,
-		toggleShowMistakes,
-		showMistakes,
-	}
-}
-
-const ShowMistakesSettings = ({ show = false, onChange }) => {
-	return <label for="showMistakes">
-		Show Mistakes
-		{show ? <button id="showMistakes" onClick={onChange}>Hide mistakes</button> :
-				<button id="showMistakes" onClick={onChange}>show mistakes</button>}
-	</label>
-}
-
-const FilterCandidatesSettings = ({ show = false, onChange }) => {
-	return <label for="filterCandidates">
-		Only show valid candidates
-		{show ? <button id="filterCandidates" onClick={onChange}>Hide invalid candidates</button> :
-				<button id="filterCandidates" onClick={onChange}>Show all candidates</button>}
-	</label>
-}
-			
+}		
 
 const Game = ({ game }) => {
 	const settings = useSettings();

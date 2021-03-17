@@ -18,6 +18,7 @@ const App = () => (
 		<Header />
 		<Router>
 			<Home path="/" />
+			{/* TODO: Refactor game creation and routing to use query params */}
 			<GameCreator path="/c/:difficulty/" />
 			<Game path="/g/:game/" />
 		</Router>

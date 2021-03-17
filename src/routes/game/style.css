@@ -67,25 +67,6 @@
 	margin-right: 10px;
 }
 
-.modalWrapper {
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
-	top: 0;
-	left: 0;
-	background: rgba(196, 241, 255, 0.2);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	z-index: 8;
-}
-
-.modalInner {
-	background: white;
-	z-index: 9;
-}
-
 .gameLink {
 	margin: 0.5rem;
 	padding: 0.5rem;
