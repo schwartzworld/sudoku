@@ -7,8 +7,12 @@ const Header = () => (
 		<h1>Preact App</h1>
 		<nav>
 			<Link activeClassName={style.active} href="/">Home</Link>
-			<Link activeClassName={style.active} href="/profile">Me</Link>
-			<Link activeClassName={style.active} href="/profile/john">John</Link>
+			<Link activeClassName={style.active} href="/c/easy">Easy</Link>
+			<Link activeClassName={style.active} href="/c/medium">Medium</Link>
+			<Link activeClassName={style.active} href="/c/hard">Hard</Link>
+			<Link activeClassName={style.active} href="/c/very-hard">Very Hard</Link>
+			<Link activeClassName={style.active} href="/c/insane">Insane</Link>
+			<Link activeClassName={style.active} href="/c/inhuman">Inhuman</Link>
 		</nav>
 	</header>
 );

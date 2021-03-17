@@ -1,24 +1,35 @@
 import { h } from 'preact';
+import { useState, useEffect } from 'preact/hooks';
 import style from './style.css';
 import s from '../../sudoku/index.js';
+import Match from 'preact-router/match';
 
-const BoardThird = ({ children }) => {
-	return <div class={style.boardThird}>
-		{ children }
-	</div>
-}
 
-const Square = ({ square }) => {
-	const className = square.isUserProvided ? style.userSquare : style.defaultSquare;
-	return <button class={`${style.square} ${className}`} disabled={!square.isUserProvided}>
-		{String(square.displayValue)}
-	</button>
-}
-
-const Row = ({ squares }) => {
-	return <div class={style.row}>
-		{ squares.map(sq => <Square square={sq} />) }
-	</div>
+const toURLValue = (val) => {
+	switch (String(val)) {
+		case '1':
+			return 'a';
+		case '2':
+			return 'b';
+		case '3':
+			return 'c';
+		case '4':
+			return 'd';
+		case '5':
+			return 'e';
+		case '6':
+			return 'f';
+		case '7':
+			return 'g';
+		case '8':
+			return 'h';
+		case '9':
+			return 'i';
+		case '.':
+			return 'k';
+		default:
+			return null;
+	}
 }
 
 const toDisplayValue = (val) => {
@@ -56,6 +67,90 @@ const toSolutionValue = (gameArr) => {
 	}).join('')
 } 
 
+const BoardThird = ({ children }) => {
+	return <div class={style.boardThird}>
+		{ children }
+	</div>
+}
+
+const useHideable = () => {
+	const { pathname } = window.location;
+	const [show, setShow] = useState(false);
+	const onOpen = () => {
+		setShow(true);
+	}
+	const onClose = () => {
+		console.log('fuck')
+		setShow(false);
+	}
+
+	useEffect(() => {
+		onClose();
+	}, [pathname])
+	return {
+		show,
+		onOpen,
+		onClose,
+	}
+}
+
+const ButtonWithModal = ({ children, buttonText, ...buttonProps }) => {
+	const { show, onOpen, onClose } = useHideable();
+
+	return <>
+		{show && <div class={style.modalWrapper}>
+			<div class={style.modalInner}>
+				<div>
+					{children}
+				</div>
+				<button onClick={onClose}>close</button>
+			</div>
+		</div>}
+		<button onClick={onOpen} {...buttonProps}>
+			{buttonText}
+		</button>
+	</>
+}
+
+const replaceByIndex = (str, index, value) => {
+	let newStr = '';
+	for (let i = 0; i < str.length; i++) {
+		if (i === index) {
+			newStr += toURLValue(value)
+		} else {
+			newStr += str[i];
+		}
+	}
+	return newStr;
+}
+
+const GameLink = ({ index, value, children }) => {
+	const { pathname } = window.location;
+	const gameStr = pathname.split('/').filter(Boolean)[1];
+	
+	return <a class={style.gameLink} href={`/g/${replaceByIndex(gameStr, index, value)}`}>{children}</a>
+}
+
+const Square = ({ square }) => {
+	const className = square.isUserProvided ? style.userSquare : style.defaultSquare;
+	return <ButtonWithModal
+		class={`${style.square} ${className}`} 
+		disabled={!square.isUserProvided} 
+		buttonText={String(square.displayValue)}
+	>
+		{square.candidates.map(candidate => {
+			return <GameLink value={candidate} index={square.index}>{candidate}</GameLink>
+		})}
+		<GameLink value={'.'} index={square.index}>Remove guess</GameLink>
+	</ButtonWithModal>
+}
+
+const Row = ({ squares }) => {
+	return <div class={style.row}>
+		{ squares.map(sq => <Square square={sq} />) }
+	</div>
+}
+
 
 
 const newGame = (gameStr) => {
@@ -66,6 +161,7 @@ const newGame = (gameStr) => {
 	const gameArr = split.map((value, index) => {
 		const v = toDisplayValue(value);
 		return {
+			index,
 			isUserProvided: Boolean(Number.isNaN(Number(value))),
 			displayValue: v,
 			correctAnswer: solution[index],
