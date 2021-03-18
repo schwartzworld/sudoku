@@ -9,12 +9,6 @@
 	background: #250038;
 }
 
-@media (max-width: 900px) {
-	.game {
-		width: 100vw;
-	}	
-}
-
 button {
 	border: none;
 	cursor: pointer;
@@ -51,22 +45,6 @@ button {
 	font-size: 2.5rem;
 	cursor: pointer;
 	color: #f3deff;	
-}
-
-@media (max-width: 730px) {
-	.square {
-		height: 2.7rem;
-		width: 2.7rem;
-		font-size: 1.5rem;
-	}	
-}
-
-@media (max-width: 400px) {
-	.square {
-		height: 1.8rem;
-		width: 1.8rem;
-		font-size: 1.5rem;
-	}	
 }
 
 .defaultSquare {
@@ -118,12 +96,6 @@ button {
 	width: calc(100% - 200px);
 }
 
-@media (max-width: 730px) {
-	.settings {
-		width: 100%;
-	}
-	
-}
 
 .settingsContainer {
 	margin: 0.25rem;

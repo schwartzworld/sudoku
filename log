@@ -1,0 +1,26 @@
+yarn run v1.22.10
+$ /home/ian/sudoku/sudoku/node_modules/.bin/preact build
+
+                  bundle.*****.esm.js ⏤  8.64 kB (+3 B)
+               polyfills.*****.esm.js ⏤  2.18 kB
+        route-game.chunk.*****.esm.js ⏤  5.07 kB
+    route-gameCreator.chunk.cd5e2.css ⏤  74 B
+ route-gameCreator.chunk.*****.esm.js ⏤  2.18 kB
+        route-home.chunk.*****.esm.js ⏤  676 B
+                                sw.js ⏤  8.48 kB
+                            sw-esm.js ⏤  8.49 kB
+                   polyfills.03bf6.js ⏤  2.17 kB
+                           index.html ⏤  1.83 kB (+1.44 kB)
+                             200.html ⏤  835 B (+453 B)
+                     bundle.36c89.css ⏤  561 B
+           route-game.chunk.2d6c6.css ⏤  911 B
+           route-home.chunk.749d5.css ⏤  0 B (-155 B)
+                      bundle.1f82f.js ⏤  0 B (-8.61 kB)
+            route-game.chunk.03a72.js ⏤  4.99 kB
+     route-gameCreator.chunk.f29ce.js ⏤  2.16 kB
+            route-home.chunk.4bf1e.js ⏤  0 B (-667 B)
+           route-home.chunk.490db.css ⏤  121 B (+121 B)
+                      bundle.a507d.js ⏤  8.61 kB (+8.61 kB)
+            route-home.chunk.e3d4d.js ⏤  667 B (+667 B)
+
+Done in 12.92s.
