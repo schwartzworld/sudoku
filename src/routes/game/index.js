@@ -22,9 +22,9 @@ const newGame = (gameStr) => {
 		const solutionValue = toSolutionValue(split);
 		const solution = s.solve(solutionValue);
 
-		const gameIsAlreadyWon = solutionValue === solution;
 		const candidates = s.get_candidates(solutionValue).flat();
-		const parsed = split.slice(0, 81).map(toDisplayValue)
+		const parsed = split.slice(0, 81).map(toDisplayValue);
+		const gameIsAlreadyWon = parsed.join('') === solution;
 		const gameArr = parsed.map((value, index) => {
 			const correctAnswer = solution[index];
 
@@ -49,7 +49,7 @@ const newGame = (gameStr) => {
 		const rows = [zero, one, two, three, four, five, six, seven, eight];
 
 		return {
-			rows, solutionValue
+			rows, solutionValue, gameIsAlreadyWon
 		}
 	} catch (e) {
 		console.error(e);
@@ -93,11 +93,12 @@ const ShareFromCurrent = ({ game }) => {
 
 const Game = ({ game }) => {
 	const settings = useSettings();
-	const { rows, solutionValue } = newGame(game);
+	const { rows, solutionValue, gameIsAlreadyWon } = newGame(game);
 	if (!game) return <GameSelectionMenu />
 	if (!rows.length) return <div class={style.game}>Invalid</div>
 
 	return 	<>
+		{ gameIsAlreadyWon && <h2>You won!</h2> }
 		<div class={style.game}>
 			<BoardThird>
 				<Row squares={rows[0]} settings={settings} />
