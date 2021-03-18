@@ -9,7 +9,7 @@ import useGameString from './hooks/useGameString.js';
 import Row from './Row.js';
 import FilterCandidatesSettings from './FilterCandidatesSettings.js';
 import ShowMistakesSettings from './ShowMistakesSettings.js';
-import { toURLValue, toDisplayValue, toSolutionValue } from './util.js'
+import { toURLValue, toDisplayValue, toSolutionValue, copyToClipboard } from './util.js'
 import p from './presentationalComponents.js'
 
 const { BoardThird, Settings } = p;
@@ -46,8 +46,8 @@ const newGame = (gameStr) => {
 		const six = gameArr.slice(54, 63);
 		const seven = gameArr.slice(63, 72);
 		const eight = gameArr.slice(72, 81);
-
 		const rows = [zero, one, two, three, four, five, six, seven, eight];
+
 		return {
 			rows
 		}
@@ -59,6 +59,7 @@ const newGame = (gameStr) => {
 
 const GameSelectionMenu = () => {
 	return <div class={style.game}>
+		<h3>Choose your difficulty</h3>
 		<ul class={style.selection}>
 			<li><a activeClassName={style.active} href="/c/easy">Easy</a></li>
 			<li><a activeClassName={style.active} href="/c/medium">Medium</a></li>
@@ -68,6 +69,26 @@ const GameSelectionMenu = () => {
 			<li><a activeClassName={style.active} href="/c/inhuman">Inhuman</a></li>
 		</ul>
 	</div>
+}
+
+const ShareFromStart = ({ game }) => {
+	const replaced = game.replace(/\./g, "k");
+	const copy = () => {
+		copyToClipboard(`${window.location.origin}/?g=${replaced}`);
+	}
+	return <button class={style.share} onClick={copy}>
+		Copy Link to Game
+	</button>
+}
+
+const ShareFromCurrent = ({ game }) => {
+	const replaced = game.replace(/\./g, "k");
+	const copy = () => {
+		copyToClipboard(`${window.location.origin}/?g=${replaced}`);
+	}
+	return <button class={style.share} onClick={copy}>
+		Fart on my face
+	</button>
 }
 
 const Game = ({ game }) => {
@@ -93,6 +114,8 @@ const Game = ({ game }) => {
 				<Row squares={rows[7]} settings={settings} />
 				<Row squares={rows[8]} settings={settings} />
 			</BoardThird>
+			<ShareFromCurrent game={game} />
+			<ShareFromStart game={game} />
 		</div>
 		<Settings>
 			<ShowMistakesSettings show={settings.showMistakes} onChange={settings.toggleShowMistakes} />

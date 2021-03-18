@@ -13,7 +13,10 @@ const App = () => (
 	<div id="app" style={{
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'space-evenly'
+		justifyContent: 'space-evenly',
+		background: '#250038',
+		color: '#f3e0ff',
+		padding: '0 10px'
 	}}>
 		<Header />
 		<Router>
