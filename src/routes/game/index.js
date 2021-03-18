@@ -74,30 +74,31 @@ const Game = ({ game }) => {
 	const settings = useSettings();
 	const { rows, gameIsAlreadyWon } = newGame(game);
 	if (!game) return <GameSelectionMenu />
-	if (gameIsAlreadyWon) return <div class={style.game}>Congrats! You won!</div>
 	if (!rows.length) return <div class={style.game}>Invalid</div>
 
-	return 	<div class={style.game}>
-		<BoardThird>
-			<Row squares={rows[0]} settings={settings} />
-			<Row squares={rows[1]} settings={settings} />
-			<Row squares={rows[2]} settings={settings} />
-		</BoardThird>
-		<BoardThird>
-			<Row squares={rows[3]} settings={settings} />
-			<Row squares={rows[4]} settings={settings} />
-			<Row squares={rows[5]} settings={settings} />
-		</BoardThird>
-		<BoardThird>
-			<Row squares={rows[6]} settings={settings} />
-			<Row squares={rows[7]} settings={settings} />
-			<Row squares={rows[8]} settings={settings} />
-		</BoardThird>
+	return 	<>
+		<div class={style.game}>
+			<BoardThird>
+				<Row squares={rows[0]} settings={settings} />
+				<Row squares={rows[1]} settings={settings} />
+				<Row squares={rows[2]} settings={settings} />
+			</BoardThird>
+			<BoardThird>
+				<Row squares={rows[3]} settings={settings} />
+				<Row squares={rows[4]} settings={settings} />
+				<Row squares={rows[5]} settings={settings} />
+			</BoardThird>
+			<BoardThird>
+				<Row squares={rows[6]} settings={settings} />
+				<Row squares={rows[7]} settings={settings} />
+				<Row squares={rows[8]} settings={settings} />
+			</BoardThird>
+		</div>
 		<Settings>
 			<ShowMistakesSettings show={settings.showMistakes} onChange={settings.toggleShowMistakes} />
 			<FilterCandidatesSettings show={settings.filterCandidates} onChange={settings.toggleFilterCandidates} />
 		</Settings>
-	</div>;
+	</>;
 }
 
 export default Game;

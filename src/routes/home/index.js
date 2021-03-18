@@ -4,6 +4,7 @@ import Game from '../game'
 
 const Instructions = () => {
 	return <div>
+		<h1>Play Schwudoku</h1>
 		<p>
 			Millions of people enjoy the challenge of Sudoku. You can too!
 		</p>
@@ -15,8 +16,9 @@ const Instructions = () => {
 			and square (nine spaces each) is filled out with the numbers 1-9 with no repeats.
 		</p>
 
-		<p>
-
+		<p style={{ marginBottom: 200}}>
+			This site is special because you can save your progress by simply copying the URL.
+			When you paste it back into the browser, you get to resume your game from the same spot.
 		</p>
 	</div>
 }
@@ -24,7 +26,6 @@ const Instructions = () => {
 const Home = ({ params, matches }) => {
 	const gameStr = matches['g'];
 	return <div class={style.home}>
-		<h1>Play Sudoku</h1>
 		<Game game={gameStr} />
 		<Instructions />
 	</div>

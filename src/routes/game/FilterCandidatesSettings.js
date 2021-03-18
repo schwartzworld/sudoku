@@ -1,11 +1,14 @@
 import { h } from 'preact';
+import style from './style.css';
 
 const FilterCandidatesSettings = ({ show = false, onChange }) => {
-	return <label for="filterCandidates">
-		Only show valid candidates
-		{show ? <button id="filterCandidates" onClick={onChange}>Hide invalid candidates</button> :
-				<button id="filterCandidates" onClick={onChange}>Show all candidates</button>}
-	</label>
+	return <div class={style.settingsContainer}>
+		<label for="filterCandidates">
+			Only show valid candidates
+		</label>
+			{show ? <button id="filterCandidates" onClick={onChange}>Filter</button> :
+					<button id="filterCandidates" onClick={onChange}>Reveal</button>}
+	</div>
 }
 
 

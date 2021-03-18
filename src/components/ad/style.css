@@ -1,6 +1,20 @@
 .ad {
-	background: hotpink;
-	color: black;
-	height: 600px;
-	width: 300px;
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: 100vh;
+	background-color: hotpink;
+	display: flex;
+	align-items: center;
+	width: 200px;
+}
+
+
+@media (max-width: 900px) {
+	.ad {
+		height: 100px;
+		top: calc(100% - 100px);
+		left: 0;
+		width: 100vw;
+	}	
 }
