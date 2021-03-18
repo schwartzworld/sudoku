@@ -658,12 +658,9 @@ sudoku.print_board = function(board){
             display_string += H_BOX_PADDING;
         }
     }
-
-    console.log(display_string);
 };
 
 sudoku.validate_board = function(board){
-    console.log(board, board.length)
     /* Return if the given `board` is valid or not. If it's valid, return
     true. If it's not, return a string of the reason why it's not.
     */

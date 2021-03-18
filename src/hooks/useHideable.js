@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks';
 
 const useHideable = () => {
-	const { pathname } = window.location;
+	const { pathname, search } = window.location;
 	const [show, setShow] = useState(false);
 	const onOpen = () => {
 		setShow(true);
@@ -12,7 +12,7 @@ const useHideable = () => {
 
 	useEffect(() => {
 		onClose();
-	}, [pathname])
+	}, [pathname, search])
 	return {
 		show,
 		onOpen,

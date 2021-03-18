@@ -1,19 +1,33 @@
 import { h } from 'preact';
 import style from './style.css';
+import Game from '../game'
 
-const Home = () => (
-	<div class={style.home}>
-		<h1>Play Sudoku</h1>
+const Instructions = () => {
+	return <div>
 		<p>
-			<ol>
-				<li>Select a difficulty from the nav menu above</li>
-				<li>Click the button to generate a game</li>
-				<li>Save your game state by copying the URL or bookmarking</li>
-				<li>Paste the URL from step 3 into any browser to continue from where you left off</li>
-				<li>Use your browser's back button to undo any mistakes</li>
-			</ol>
+			Millions of people enjoy the challenge of Sudoku. You can too!
+		</p>
+		<h3>How to Play</h3>
+
+		<p>
+			A Sudoku game consists of a 9x9 grid of numbers with some of the squares left blank.
+			Your job is to fill out the missing numbers. The game is won when all rows, columns,
+			and square (nine spaces each) is filled out with the numbers 1-9 with no repeats.
+		</p>
+
+		<p>
+
 		</p>
 	</div>
-);
+}
+
+const Home = ({ params, matches }) => {
+	const gameStr = matches['g'];
+	return <div class={style.home}>
+		<h1>Play Sudoku</h1>
+		<Game game={gameStr} />
+		<Instructions />
+	</div>
+};
 
 export default Home;

@@ -55,11 +55,25 @@ const newGame = (gameStr) => {
 		console.error(e);
 		return { rows: [] }
 	}
-}		
+}
+
+const GameSelectionMenu = () => {
+	return <div class={style.game}>
+		<ul class={style.selection}>
+			<li><a activeClassName={style.active} href="/c/easy">Easy</a></li>
+			<li><a activeClassName={style.active} href="/c/medium">Medium</a></li>
+			<li><a activeClassName={style.active} href="/c/hard">Hard</a></li>
+			<li><a activeClassName={style.active} href="/c/very-hard">Very Hard</a></li>
+			<li><a activeClassName={style.active} href="/c/insane">Insane</a></li>
+			<li><a activeClassName={style.active} href="/c/inhuman">Inhuman</a></li>
+		</ul>
+	</div>
+}
 
 const Game = ({ game }) => {
 	const settings = useSettings();
 	const { rows, gameIsAlreadyWon } = newGame(game);
+	if (!game) return <GameSelectionMenu />
 	if (gameIsAlreadyWon) return <div class={style.game}>Congrats! You won!</div>
 	if (!rows.length) return <div class={style.game}>Invalid</div>
 

@@ -1,6 +1,6 @@
 const useGameString = () => {
-	const { pathname } = window.location;
-	return pathname.split('/').filter(Boolean)[1];
+	const { search } = window.location;
+	return new URLSearchParams(search).get('g');
 };
 
-export default useGameString();
+export default useGameString;
