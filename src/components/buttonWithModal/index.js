@@ -12,7 +12,7 @@ const ButtonWithModal = ({ children, buttonText, ...buttonProps }) => {
 				<div>
 					{children}
 				</div>
-				<button onClick={onClose}>close</button>
+				<button class={style.close} onClick={onClose}>close</button>
 			</div>
 		</div>}
 		<button onClick={onOpen} {...buttonProps}>

@@ -6,6 +6,7 @@
 	width: calc(100vw - 200px);
 	position: sticky;
 	top: 56px;
+	background: #250038;
 }
 
 @media (max-width: 900px) {
@@ -17,6 +18,8 @@
 button {
 	border: none;
 	cursor: pointer;
+	background: #bc6ff1;
+	color: #2a0042;
 }
 
 .boardThird {
@@ -45,16 +48,15 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #e3acfa;
 	font-size: 2.5rem;
 	cursor: pointer;
+	color: #f3deff;	
 }
 
 @media (max-width: 730px) {
 	.square {
 		height: 2.7rem;
 		width: 2.7rem;
-		background: #e3acfa;
 		font-size: 1.5rem;
 	}	
 }
@@ -63,18 +65,17 @@ button {
 	.square {
 		height: 1.8rem;
 		width: 1.8rem;
-		background: #e3acfa;
 		font-size: 1.5rem;
 	}	
 }
 
 .defaultSquare {
-	background: #e3acfa;
+	background: #892cdc;
 	cursor: not-allowed;
 }
 
 .userSquare {
-	background: #d1889a;
+	background: #52057b;
 }
 
 .incorrectSquare {
@@ -85,7 +86,7 @@ button {
 	background: #e399fa;	
 }
 .square:disabled {
-	color: #555;	
+	color: #f3deff;	
 }
 
 
@@ -99,18 +100,14 @@ button {
 .gameLink {
 	margin: 0.5rem;
 	padding: 0.5rem;
-	background: pink;
+	background: #eacafc;
 	border: 1px solid black;
 	border-radius: 3px;
 	display: inline-block;
 	text-decoration: none;
+	width: auto;
+	height: 2rem;
 	color: black;
-}
-
-.gameLink:hover {
-	background: deeppink;
-	border: 1px solid white;
-	color: white;
 }
 
 .settings {
@@ -148,7 +145,17 @@ button {
 	align-items: center;
 }
 
+.selection > li > a {
+	color: #f3deff;
+}
+
 .share {
 	position: absolute;
 	bottom: 0;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+.share > button {
+	margin: 5px;
 }

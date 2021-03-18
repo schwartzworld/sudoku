@@ -13,6 +13,15 @@
 }
 
 .modalInner {
-	background: white;
+	background: #3e0061;
 	z-index: 9;
+	padding: 1rem;
+	max-width: 50%;
+	position: relative;
+}
+
+.close {
+	position: absolute;
+	top: 0;
+	right: 0;
 }

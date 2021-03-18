@@ -3,7 +3,7 @@ import style from './style.css';
 import Game from '../game'
 
 const Instructions = () => {
-	return <div>
+	return <div class={style.instructions}>
 		<h1>Play Schwudoku</h1>
 		<p>
 			Millions of people enjoy the challenge of Sudoku. You can too!
@@ -27,7 +27,7 @@ const Home = ({ params, matches }) => {
 	const gameStr = matches['g'];
 	return <div class={style.home}>
 		<Game game={gameStr} />
-		<Instructions />
+		{!gameStr && <Instructions />}
 	</div>
 };
 

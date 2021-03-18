@@ -49,7 +49,7 @@ const newGame = (gameStr) => {
 		const rows = [zero, one, two, three, four, five, six, seven, eight];
 
 		return {
-			rows
+			rows, solutionValue
 		}
 	} catch (e) {
 		console.error(e);
@@ -61,12 +61,12 @@ const GameSelectionMenu = () => {
 	return <div class={style.game}>
 		<h3>Choose your difficulty</h3>
 		<ul class={style.selection}>
-			<li><a activeClassName={style.active} href="/c/easy">Easy</a></li>
-			<li><a activeClassName={style.active} href="/c/medium">Medium</a></li>
-			<li><a activeClassName={style.active} href="/c/hard">Hard</a></li>
-			<li><a activeClassName={style.active} href="/c/very-hard">Very Hard</a></li>
-			<li><a activeClassName={style.active} href="/c/insane">Insane</a></li>
-			<li><a activeClassName={style.active} href="/c/inhuman">Inhuman</a></li>
+			<li><a href="/c/easy">Easy</a></li>
+			<li><a href="/c/medium">Medium</a></li>
+			<li><a href="/c/hard">Hard</a></li>
+			<li><a href="/c/very-hard">Very Hard</a></li>
+			<li><a href="/c/insane">Insane</a></li>
+			<li><a href="/c/inhuman">Inhuman</a></li>
 		</ul>
 	</div>
 }
@@ -76,8 +76,8 @@ const ShareFromStart = ({ game }) => {
 	const copy = () => {
 		copyToClipboard(`${window.location.origin}/?g=${replaced}`);
 	}
-	return <button class={style.share} onClick={copy}>
-		Copy Link to Game
+	return <button onClick={copy}>
+		Share game from initial state
 	</button>
 }
 
@@ -86,14 +86,14 @@ const ShareFromCurrent = ({ game }) => {
 	const copy = () => {
 		copyToClipboard(`${window.location.origin}/?g=${replaced}`);
 	}
-	return <button class={style.share} onClick={copy}>
-		Fart on my face
+	return <button onClick={copy}>
+		Share game from current state
 	</button>
 }
 
 const Game = ({ game }) => {
 	const settings = useSettings();
-	const { rows, gameIsAlreadyWon } = newGame(game);
+	const { rows, solutionValue } = newGame(game);
 	if (!game) return <GameSelectionMenu />
 	if (!rows.length) return <div class={style.game}>Invalid</div>
 
@@ -114,13 +114,15 @@ const Game = ({ game }) => {
 				<Row squares={rows[7]} settings={settings} />
 				<Row squares={rows[8]} settings={settings} />
 			</BoardThird>
-			<ShareFromCurrent game={game} />
-			<ShareFromStart game={game} />
-		</div>
+			<div class={style.share}>
+				<ShareFromCurrent game={game} />
+				<ShareFromStart game={solutionValue} />
+			</div>
 		<Settings>
 			<ShowMistakesSettings show={settings.showMistakes} onChange={settings.toggleShowMistakes} />
 			<FilterCandidatesSettings show={settings.filterCandidates} onChange={settings.toggleFilterCandidates} />
 		</Settings>
+		</div>
 	</>;
 }
 
