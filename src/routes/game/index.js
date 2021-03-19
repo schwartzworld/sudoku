@@ -8,6 +8,7 @@ import useSettings from './hooks/useSettings.js';
 import useGameString from './hooks/useGameString.js';
 import Row from './Row.js';
 import FilterCandidatesSettings from './FilterCandidatesSettings.js';
+import CandidatesToggle from './CandidatesToggle.jsx';
 import ShowMistakesSettings from './ShowMistakesSettings.js';
 import { toURLValue, toDisplayValue, toSolutionValue, copyToClipboard } from './util.js'
 import p from './presentationalComponents.js'
@@ -31,7 +32,7 @@ const newGame = (gameStr) => {
 			return {
 				index,
 				isUserProvided: Number.isNaN(Number(split[index])),
-				displayValue: value,
+				displayValue: value === '.' ? null : value,
 				correctAnswer,
 				candidates: candidates[index].split(''),
 				isIncorrect: value !== '.' && String(correctAnswer) !== String(value),
@@ -71,23 +72,13 @@ const GameSelectionMenu = () => {
 	</div>
 }
 
-const ShareFromStart = ({ game }) => {
+const ShareGameButton = ({ game, children }) => {
 	const replaced = game.replace(/\./g, "k");
 	const copy = () => {
 		copyToClipboard(`${window.location.origin}/?g=${replaced}`);
 	}
 	return <button onClick={copy}>
-		Share game from initial state
-	</button>
-}
-
-const ShareFromCurrent = ({ game }) => {
-	const replaced = game.replace(/\./g, "k");
-	const copy = () => {
-		copyToClipboard(`${window.location.origin}/?g=${replaced}`);
-	}
-	return <button onClick={copy}>
-		Share game from current state
+		{children}
 	</button>
 }
 
@@ -116,12 +107,17 @@ const Game = ({ game }) => {
 				<Row squares={rows[8]} settings={settings} />
 			</BoardThird>
 			<div class={style.share}>
-				<ShareFromCurrent game={game} />
-				<ShareFromStart game={solutionValue} />
+				<ShareGameButton game={game}>
+					Share game from current state
+				</ShareGameButton>
+				<ShareGameButton game={solutionValue}>
+					Share game from initial state
+				</ShareGameButton>
 			</div>
 		<Settings>
 			<ShowMistakesSettings show={settings.showMistakes} onChange={settings.toggleShowMistakes} />
 			<FilterCandidatesSettings show={settings.filterCandidates} onChange={settings.toggleFilterCandidates} />
+			<CandidatesToggle show={settings.candidateMode} onChange={settings.toggleCandidateMode} />
 		</Settings>
 		</div>
 	</>;
